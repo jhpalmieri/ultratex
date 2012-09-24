@@ -1,3 +1,22 @@
+Quick updated installation instructions:
+
+Get the source code (for example from
+https://github.com/jhpalmieri/ultratex). Put it somewhere in your
+emacs load-path.
+
+Also make sure you have AUC-TeX installed (see
+http://www.gnu.org/software/auctex/index.html), in particular the
+files tex.el, tex-buf.el, tex-site.el, and fond-latex.el.
+
+
+
+
+
+
+
+
+The following steps may be outdated.
+
 To install the ultra-tex/lightning-completion package, here's what you do:
 
   0. (You've probably already done this.)  Get the archive, which is
