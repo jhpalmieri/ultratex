@@ -16,7 +16,7 @@
 ;; For font-lock:
 (ultex-declare-variables 'font-latex-keywords
 			 'font-latex-keywords-2
-			 'font-lock-defaults-alist)
+			 'font-lock-defaults)
 
 ;; For imenu:
 (ultex-declare-variables 'imenu-create-index-function)

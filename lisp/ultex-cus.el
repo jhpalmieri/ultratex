@@ -234,11 +234,11 @@ The latest recent version is available from
 	       (if lc-xemacs-p
 		   (put 'ultra-tex-mode 'font-lock-keywords
 			'font-latex-keywords)
-		 (setq font-lock-defaults-alist
+		 (setq font-lock-defaults
 		       (cons (cons 'ultra-tex-mode
 				   '(font-latex-keywords
 				     nil nil ((?$ . "\""))))
-			     font-lock-defaults-alist))))
+			     font-lock-defaults))))
 	   (or lc-xemacs-p
 	       (require 'font-lock)
 	       (setq font-lock-defaults-alist
@@ -740,11 +740,11 @@ the Emacs manual) to set this variable permanently for each file."
 	    (if lc-xemacs-p
 		(put 'ultra-tex-mode 'font-lock-keywords
 		     'font-latex-keywords)
-	      (setq font-lock-defaults-alist
+	      (setq font-lock-defaults
 		    (cons (cons 'ultra-tex-mode
 				'(font-latex-keywords
 				  nil nil ((?$ . "\""))))
-			  font-lock-defaults-alist))))
+			  font-lock-defaults))))
 	(or lc-xemacs-p
 	    (require 'font-lock)
 	    (setq font-lock-defaults-alist
