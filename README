@@ -1,3 +1,10 @@
+The lightning completion package and the ultratex package are
+distributed together. If you just want lightning completion, then you
+just need the file "light.el" from the lisp directory, and optionally
+the documentation "light.texi" from the texi directory.
+
+
+
 Lightning completion package
 ----------------------------------
 (Version 0.60 of 1999/04/28)
