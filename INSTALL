@@ -1,0 +1,85 @@
+Installation instructions:
+
+1. Get the source code (for example, from
+https://github.com/jhpalmieri/ultratex). Make sure that the lisp
+directory is in your emacs load-path: put a line like this in your
+.emacs file:
+
+  (setq load-path (cons "/home/user/ultratex/lisp" load-path))
+
+2. Also, make sure that AUC-TeX
+(http://www.gnu.org/software/auctex/index.html) is installed -- it may
+be already, depending on your Emacs installation. In particular, we
+need the files tex.el, tex-buf.el, tex-site.el, and fond-latex.el. You
+can just get those four files and put them in your load path, for
+example in the directory ultratex/lisp, or you can do the full AUC-TeX
+installation. If you do, then I think that those files won't be put
+into your load-path.  You can test this by starting Emacs and
+executing
+
+  M-x locate-library tex-buf
+
+and see if it gives an error or not. If it gives an error, then you
+need to remedy this, either by hand, putting a line like this in your
+.emacs file:
+
+  (setq load-path (cons "/directory/containing/tex-buf.el" load-path))
+
+or you can try to let emacs figure it out. With the standard
+installation of auctex, if "auctex.el" is in directory "DIR", then the
+relevant files are in "DIR/auctex/", so this should work:
+
+  (setq load-path (cons
+                   (substring (locate-library "auctex") 0 -3)
+                   load-path))
+
+3. At this point, you should probably byte-compile the files in the
+ultratex/lisp directory: from the directory "ultratex", if you run
+emacs by typing "emacs", then run:
+
+    make elc
+
+If you run emacs by typing something else (e.g., "emacs-20.3" or
+"xemacs"), run:
+
+    make EMACS=emacs-20.3 elc
+
+or
+
+    make EMACS=xemacs elc
+
+or whatever.
+
+4. (This step is optional, but if you want to read the documentation,
+you need to do this.)  Run:
+
+        make info
+
+to create info files, usable by Info mode in Emacs or by stand-alone
+info readers.  Run
+
+        make dvi
+
+to create dvi files. (As in the previous step, you can specify
+EMACS=... here.)
+
+5. Put the lines
+
+    (require 'light)
+    (require 'ultex-setup)
+
+in your .emacs file. These initialize the Lightning Completion and
+Ultra-TeX packages, respectively.
+
+6. Restart Emacs and customize the packages as desired, by using the
+commands
+
+    M-x customize-group lightning-completion
+    M-x customize-group ultra-tex
+
+You may need to load the ultex package, say by typing
+
+    M-x load-library ultex
+
+or by opening up a TeX file, before you can do the second
+customization.
