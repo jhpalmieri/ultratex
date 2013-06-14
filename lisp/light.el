@@ -1,5 +1,5 @@
 ;;; light.el --- lightning completion
-;; Copyright (c) 2005
+;; Copyright (c) 2005, 2013
 ;; Mark Haiman, Nick Reingold, John Palmieri
 
 ;; Authors:   Mark Haiman <mhaiman@macaulay.ucsd.edu>, 
@@ -8,7 +8,7 @@
 ;; Maintainer: John Palmieri <palmieri@math.washington.edu>
 ;;             URL: http://www.math.washington.edu/~palmieri/Emacs/light.html
 ;; Keywords: completion
-;; Version:  0.73 of Tue Jan 12 15:06:36 PST 2010
+;; Version:  0.74 of Fri Jun 14 10:52:02 PDT 2013
 
 ;; This file is not part of GNU Emacs.
 
@@ -1075,9 +1075,9 @@ lc-complete-idle-time, run lc-idle-complete."
   (lc-stop-cycling)
   (setq lc-stack (cons (concat
 			(car lc-stack)
-			(char-to-string last-command-char))
+			(char-to-string last-command-event))
 		       lc-stack))
-  (insert last-command-char)
+  (insert last-command-event)
   (if (null lc-complete-idle-time)
       (setq lc-complete-idle-time lc-complete-idle-time-default))
   (if (or (zerop lc-complete-idle-time)
@@ -1118,9 +1118,9 @@ you can use it outside of the minibuffer."
   (interactive)
   (lc-stop-cycling)
   (setq lc-stack (cons (concat (car lc-stack) (char-to-string
-					       last-command-char))
+					       last-command-event))
 		       lc-stack))
-  (insert last-command-char))
+  (insert last-command-event))
 
 ;; bound to lc-keep-key (space, by default)
 (defun lc-keep-if-complete nil
@@ -1164,7 +1164,7 @@ If there is no previous unit, quit quietly."
   (interactive)
   (let ((inhibit-quit t))
     (lc-message "^Q- ")
-    (setq last-command-char (read-quoted-char))
+    (setq last-command-event (read-quoted-char))
     (lc-self-insert-char)))
 
 ;; bound to lc-help-key (C-h, by default)
