@@ -8,7 +8,7 @@
 ;; Maintainer: John Palmieri <palmieri@math.washington.edu>
 ;;             URL: http://www.math.washington.edu/~palmieri/Emacs/light.html
 ;; Keywords: completion
-;; Version:  0.74 of Fri Jun 14 10:52:02 PDT 2013
+;; Version:  0.82 of Fri Jun 14 10:52:02 PDT 2013
 
 ;; This file is not part of GNU Emacs.
 

@@ -4,7 +4,7 @@
 ;; Authors:   Mark Hovey <hovey@member.ams.org>, 
 ;;            John Palmieri <palmieri@math.washington.edu>
 ;; Keywords: AUC-TeX vs. Ultra-TeX
-;; Version:  0.63 of Tue Jun 29 14:39:57 PDT 1999
+;; Version:  0.82 of Fri Jun 14 10:55:54 PDT 2013
 
 ;; This file is not part of GNU Emacs.
 
