@@ -9,7 +9,7 @@
 ;; Maintainer: John Palmieri <palmieri@math.washington.edu>
 ;;             URL: http://www.math.washington.edu/~palmieri/Emacs/ultratex.html
 ;; Keywords: TeX-mode, completion
-;; Version:  0.82 of Fri Jun 14 10:52:02 PDT 2013
+;; Version:  0.83 of Sat Jul  6 14:33:34 PDT 2013
 
 ;; This file is not part of GNU Emacs.
 
@@ -452,7 +452,6 @@ Special functions:
 	(ultex-reset-greek-keys)))
   (ultex-menu-define-xemacs)
   (use-local-map ultra-tex-mode-map)
-  (hack-local-variables)
   (ultex-reset-perm-alist)
 
   (let ((ultex-start (save-excursion
@@ -1193,7 +1192,7 @@ really grab the defs.  If the buffer contains the string
 			      "\\\\\\(re\\)?newenvironment\\s-*{\\([a-zA-Z]+\\)\\s-*}"
 			      ultex-start 2))
 		  (setq nargs (or (and (looking-at "\\[\\([1-9]\\)\\]")
-				       (string-to-int
+				       (string-to-number
 					(buffer-substring-no-properties
 					 (match-beginning 1)
 					 (match-end 1))))
@@ -1222,7 +1221,7 @@ really grab the defs.  If the buffer contains the string
 			      "\\\\\\(\\(re\\)?new\\|provide\\)command\\s-*{?\\(\\\\[a-zA-Z]+\\|\\\\.\\)\\s-*}?"
 			      ultex-end 3))
 		  (setq nargs (or (and (looking-at "\\[\\([1-9]\\)\\]")
-				       (string-to-int
+				       (string-to-number
 					(buffer-substring-no-properties
 					 (match-beginning 1)
 					 (match-end 1))))

@@ -1,5 +1,5 @@
 ;;; ultex-cus.el --- customization things in Ultra-TeX mode
-;; Copyright (c) 1998, 1999, 2000, 2001, 2002
+;; Copyright (c) 1998, 1999, 2000, 2001, 2002, 2013
 ;; Mark Haiman, Nick Reingold, John Palmieri
 
 ;; Authors:   Mark Haiman <mhaiman@macaulay.ucsd.edu>, 
@@ -8,7 +8,7 @@
 ;; Maintainer: John Palmieri <palmieri@math.washington.edu>
 ;;             URL: http://www.math.washington.edu/~palmieri/Emacs/ultratex.html
 ;; Keywords: TeX-mode, completion
-;; Version:  0.82 of Fri Jun 14 10:52:02 PDT 2013
+;; Version:  0.83 of Sat Jul  6 14:34:46 PDT 2013
 
 ;; This file is not part of GNU Emacs.
 
@@ -221,9 +221,8 @@ ultra-tex-mode."
 (defcustom ultex-use-font-latex nil
   "*Toggle use of the font-latex package for colorization.
 This variable is only relevant if ultex-use-color is `on'.
-One version of the file font-latex.el is distributed with Ultra-TeX.
-The latest recent version is available from  
-  ftp://ftp.phys.ocean.dal.ca/users/rhogee/elisp/font-latex.el"
+You should use the version of font-latex which is distributed with
+AUC-TeX. See the top-level INSTALL file for more information."
   :type '(boolean)
   :set (lambda (symbol value)
 	 (if value
@@ -231,9 +230,11 @@ The latest recent version is available from
 	       (require 'font-lock)
 	       (require 'font-latex)
 	       (setq font-latex-keywords font-latex-keywords-2)
+               (add-hook 'ultra-tex-mode-internal-hook
+                         'font-latex-setup)
 	       (if lc-xemacs-p
-		   (put 'ultra-tex-mode 'font-lock-keywords
-			'font-latex-keywords)
+                     (put 'ultra-tex-mode 'font-lock-keywords
+                          'font-latex-keywords)
 		 (setq font-lock-defaults
 		       (cons (cons 'ultra-tex-mode
 				   '(font-latex-keywords
@@ -250,12 +251,10 @@ The latest recent version is available from
 			      nil nil ((?$ . "\"")) nil
 			      (font-lock-mark-block-function
 			       . mark-paragraph)))
-			   font-lock-defaults-alist))))
-	 (set symbol value))
-  :link '(url-link
-	  :tag
-	  "FTP site"
-	  "ftp://ftp.phys.ocean.dal.ca/users/rhogee/elisp/font-latex.el")
+			   font-lock-defaults-alist))
+               (remove-hook 'ultra-tex-mode-internal-hook
+                            'font-latex-setup)))
+         (set symbol value))
   :group 'ultra-tex-init)
 
 (defcustom ultex-use-auctex nil

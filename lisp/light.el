@@ -8,7 +8,7 @@
 ;; Maintainer: John Palmieri <palmieri@math.washington.edu>
 ;;             URL: http://www.math.washington.edu/~palmieri/Emacs/light.html
 ;; Keywords: completion
-;; Version:  0.82 of Fri Jun 14 10:52:02 PDT 2013
+;; Version:  0.83 of Sat Jul  6 14:34:03 PDT 2013
 
 ;; This file is not part of GNU Emacs.
 
@@ -1360,8 +1360,7 @@ lc-choose-completion-string instead of choose-completion-string."
   (let ((buffer (window-buffer))
         choice
 	base-size)
-    (save-excursion
-      (set-buffer (window-buffer (posn-window (event-start event))))
+    (with-current-buffer (window-buffer (posn-window (event-start event)))
       (if completion-reference-buffer
 	  (setq buffer completion-reference-buffer))
       (setq base-size completion-base-size)
