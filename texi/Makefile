@@ -1,5 +1,4 @@
 # 'make info' produces info files, as does 'make texinfo'
-# 'make dv' produces dvi files (and lots of crap)
 # 'make dvi' produces dvi files and lots of crap, then erases the crap
 # 'make all' produces both info and dvi files, and cleans up afterwards
 # 'make install' copies the info files to /usr/local/info (or the value
@@ -13,6 +12,7 @@
 #     PERL=
 #  
 SOURCES = light.texi ultra.texi
+DVIFILES = light.dvi ultra.dvi
 INFOFILES = light.info ultra.info
 #
 TEXI2HTML=texi2html
@@ -23,25 +23,26 @@ MAKEINFO=makeinfo
 TEXI2FLAG=-menu -split_chapter 
 INFODIR=/usr/local/info
 
-all: texinfo dv clean
+all: texinfo dvi
 
 info: texinfo
 
 texinfo:
 	$(MAKEINFO) $(SOURCES)
 
-dv:
-	$(TEXI2DVI) $(SOURCES)
+$(DVIFILES): %.dvi: %.texi
+	$(TEXI2DVI) $<
 
-dvi: dv clean
+dvi: $(DVIFILES) clean
 
 html:
 	$(PERL) $(TEXI2HTML) $(TEXI2FLAG) $(SOURCES)
 
-clean:
+clean: $(DVIFILES)
 	'rm' -f *.aux *.cp *.fn *.ky *.log *.pg *.toc *.tp *.vr *.fns *.cps *.vrs
 
 distclean:
+	'rm' -f *.aux *.cp *.fn *.ky *.log *.pg *.toc *.tp *.vr *.fns *.cps *.vrs
 	'rm' -f *.info *.dvi
 
 install:

@@ -308,9 +308,9 @@ library available.")
     (defmacro defgroup (&rest args)
       nil)
     (defmacro defface (var values doc &rest args)
-      (` (make-face (, var))))
+      ` (make-face (, var)))
     (defmacro defcustom (var value doc &rest args) 
-      (` (defvar (, var) (, value) (, doc))))))
+      ` (defvar (, var) (, value) (, doc)))))
 
 (defgroup lightning-completion nil
   "Lightning completion mode: dynamic completion on lisp objects, file
@@ -1803,7 +1803,7 @@ this function."
 	       lightning-completion-list-default))
 	((equal arg 'all)
 	 (setq lightning-completion-list
-	       (mapcar '(lambda (x) (append x t))
+	       (mapcar #'(lambda (x) (append x t))
 			  lightning-completion-list-default)))
 	(t
 	 (let ((arg-list (cons arg args)) old)

@@ -1770,17 +1770,17 @@ If nil, warn user unless given optional ARG."
 
 (defvar ultex-123-row '("" (?1 ?! . nil) (?2 ?@ . ?\C-@) (?3 ?# . nil)
 			   (?4 ?$ . nil) (?5 ?% . nil) (?6 ?^ . ?\C-^)
-			   (?7 ?& . nil) (?8 ?* . nil) (?9 ?( . nil)
-			   (?0 ?) . nil) (?- ?_ . ?\C-_) (?= ?+ . nil)
+			   (?7 ?& . nil) (?8 ?* . nil) (?9 ?\( . nil)
+			   (?0 ?\) . nil) (?- ?_ . ?\C-_) (?= ?+ . nil)
 			   (?` ?~ . nil)))
 (defvar ultex-qwe-row '("  " (?q ?Q . ?\C-q) (?w ?W . ?\C-w) (?e ?E . ?\C-e)
 			      (?r ?R . ?\C-r) (?t ?T . ?\C-t) (?y ?Y . ?\C-y)
 			      (?u ?U . ?\C-u) (?i ?I . ?\C-i) (?o ?O . ?\C-o)
-			      (?p ?P . ?\C-p) (?[ ?{ . nil) (?] ?} . ?\C-])))
+			      (?p ?P . ?\C-p) (?\[ ?{ . nil) (?\] ?} . ?\C-])))
 (defvar ultex-asd-row '("   " (?a ?A . ?\C-a) (?s ?S . ?\C-s) (?d ?D . ?\C-d)
 			       (?f ?F . ?\C-f) (?g ?G . ?\C-g) (?h ?H . ?\C-h)
 			       (?j ?J . ?\C-j) (?k ?K . ?\C-k) (?l ?L . ?\C-l)
-			       (?; ?: . nil) (?' ?" . nil)))
+			       (?\; ?: . nil) (?' ?\" . nil)))
 (defvar ultex-zxc-row '("     "
 			(?z ?Z . ?\C-z) (?x ?X . ?\C-x) (?c ?C . ?\C-c)
 			(?v ?V . ?\C-v) (?b ?B . ?\C-b) (?n ?N . ?\C-n)
@@ -2442,9 +2442,9 @@ With numeric arg N, always insert N \" characters."
 (defun ultex-insert-brackets nil
   "Make a pair of brackets and be poised to type inside of them."
   (interactive)
-  (insert ?[)
+  (insert ?\[)
   (save-excursion
-    (insert ?])))
+    (insert ?\])))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Functions stolen (and corrected) from TeX mode.
