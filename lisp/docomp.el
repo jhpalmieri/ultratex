@@ -34,18 +34,6 @@
 (setq byte-compile-warnings '(free-vars)
       byte-optimize t)
 
-;; convince tex-buf.el that we actually have the AUC-TeX file tex.el,
-;; for those users who don't want to have to download the the whole
-;; AUC-TeX package.  Similarly for tex-buf, but this to avoid
-;; byte-compiling errors.
-(provide 'tex)
-(provide 'tex-buf)
-
-(if (and (boundp 'emacs-major-version)
-	 (= 19 emacs-major-version))
-    (setq command-line-args-left
-	  (delete "tex-buf.el" command-line-args-left)))    
-
 (defun ultex-byte-compile-quietly ()
   (interactive)
   (setq byte-compile-warnings nil)

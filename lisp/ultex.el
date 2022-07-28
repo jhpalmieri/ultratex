@@ -349,6 +349,9 @@ Built from bibliographical entries in buffer.")
 (defvar ultex-greek-meta-map nil
   "Keymap for meta Greek keyboard")
 
+;; from AUCTeX:
+(defvar compilation-in-progress nil)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; entry point and other main functions.
 ;;

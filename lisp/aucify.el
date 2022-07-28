@@ -28,11 +28,10 @@
 ;;   
 ;; This file defines variables and keys in ultra-tex-mode-map which
 ;; let Ultra-TeX mode use the AUC-TeX functions (from the file
-;; tex-buf.el) that run (La)TeX on your buffer, start up a viewer,
+;; tex.el) that run (La)TeX on your buffer, start up a viewer,
 ;; print the file, etc.  See the AUC-TeX documentation for how to use
 ;; this (basically, you just hit C-c C-c).
 
-(require 'tex-buf)
 (require 'ultex)
 (require 'tex)
 

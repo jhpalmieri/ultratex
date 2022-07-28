@@ -263,20 +263,20 @@ This has one main effect: several commands are added to Ultra-TeX to
 allow one to typeset the current TeX document, spawn an external
 viewer, jump to the next error, etc.
 
-This option requires the use of the file tex-buf.el from the AUC-TeX
-distribution.  This file is included with Ultra-TeX, but if you want
-the most up-to-date version, the AUC-TeX package is available from
-  http://sunsite.auc.dk/auctex/"
+This option requires the use of the file tex.el from the AUC-TeX
+distribution."
   :type '(boolean)
   :set (lambda (symbol value)
-	 (let ((file (locate-library "tex-buf")))
+	 (let ((file (locate-library "tex")))
 	   (if (and value (stringp file))
 	       (progn
 		 (defvar TeX-lisp-directory
 		   (file-name-directory file)
 		   "*The directory where the AUC TeX lisp files are located.")
 		 (add-hook 'ultra-tex-mode-internal-hook
-			   'ultra-tex-require-aucify))
+			   'ultra-tex-require-aucify)
+		 (add-hook 'ultra-tex-mode-internal-hook
+			   (lambda nil (setq TeX-output-extension "pdf"))))
 	     (remove-hook 'ultra-tex-mode-internal-hook
 			  'ultra-tex-require-aucify)))
 	 (set symbol value))
@@ -696,97 +696,6 @@ This directory should have a subdirectory called \"xpm\" (or \"gif\" or
   :type '(file :must-match t)
   :group 'ultra-tex-misc)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; borrowed from aucify.el (and originally from the AUC-TeX file tex.el):
-;;
-
-(defcustom TeX-master t
-  "The master file associated with the current buffer.
-If the file being edited is actually included from another file, you
-can tell AUC TeX the name of the master file by setting this variable.
-If there are multiple levels of nesting, specify the top level file. 
-
-If this variable is nil, AUC TeX will query you for the name.
-
-If the variable is t, AUC TeX will assume the file is a master file
-itself.
-
-If the variable is 'shared, AUC TeX will query for the name, but not
-change the file.  
-
-It is suggested that you use the File Variables (see the info node in
-the Emacs manual) to set this variable permanently for each file."
-  :group 'TeX-command
-  :group 'TeX-parse
-  :group 'ultra-tex-auctex-files
-  :type '(choice (const :tag "Query" nil)
-		 (const :tag "This file" t)
-		 (const :tag "Shared" shared)
-		 (string :format "%v")))
-(make-variable-buffer-local 'TeX-master)
-
-;; set variables correctly if not using a new version of custom.
-(if (not lc-custom-p)
-    (progn
-      (if (and ultex-use-color window-system (x-display-color-p))
-	  (add-hook 'ultra-tex-mode-internal-hook
-		    'turn-on-font-lock))
-      (if ultex-use-font-latex
-	  (progn
-	    (require 'font-lock)
-	    (require 'font-latex)
-	    (setq font-latex-keywords font-latex-keywords-2)
-	    (if lc-xemacs-p
-		(put 'ultra-tex-mode 'font-lock-keywords
-		     'font-latex-keywords)
-	      (setq font-lock-defaults
-		    (cons (cons 'ultra-tex-mode
-				'(font-latex-keywords
-				  nil nil ((?$ . "\""))))
-			  font-lock-defaults))))
-	(or lc-xemacs-p
-	    (require 'font-lock)
-	    (setq font-lock-defaults-alist
-		  (cons (cons
-			 'ultra-tex-mode
-			 '((tex-font-lock-keywords
-			    tex-font-lock-keywords-1
-			    tex-font-lock-keywords-2)
-			   nil nil ((?$ . "\"")) nil
-			   (font-lock-mark-block-function
-			    . mark-paragraph)))
-			font-lock-defaults-alist))))
-      (if ultex-use-auctex
-	  (let ((file (locate-library "tex-buf")))
-	    (if (stringp file)
-		(progn
-		  (defvar TeX-lisp-directory
-		    (file-name-directory file)
-		    "*The directory where the AUC TeX lisp files are located.")
-		  (add-hook 'ultra-tex-mode-internal-hook
-			    'ultra-tex-require-aucify))
-	      (remove-hook 'ultra-tex-mode-internal-hook
-			   'ultra-tex-require-aucify))))
-      (if ultex-use-imenu
-	  (if window-system
-	      (progn
-		(require 'imenu)
-		(if lc-xemacs-p
-		    (global-set-key [(shift button3)] 'imenu)
-		  (global-set-key [S-mouse-3] 'imenu))
-		(add-hook 'ultra-tex-mode-internal-hook
-			  'ultra-tex-add-imenu))))
-      (if ultex-use-bib-cite
-	  (progn 
-	    (require 'bib-cite)
-	    (remove-hook 'ultra-tex-mode-internal-hook
-			 'ultra-tex-add-imenu)
-	    (add-hook 'ultra-tex-mode-internal-hook
-		      'ultra-tex-add-bib-cite)
-	    (if (and window-system ultex-use-imenu)
-		(add-hook 'ultra-tex-mode-internal-hook
-			  'ultra-tex-add-bib-cite-imenu))))))
-      
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (provide 'ultex-cus)

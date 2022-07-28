@@ -61,10 +61,6 @@ ultra-tex-mode-alist-changes is replaced by ultra-tex-mode."
 (ultra-tex-install ultra-tex-mode-choice)
 
 (autoload 'ultra-tex-mode "ultex" nil t)
-(autoload 'tex-mode "tex" nil t)
-(autoload 'TeX-mode "tex" nil t)
-(autoload 'latex-mode "latex" nil t)
-(autoload 'LaTex-mode "latex" nil t)
 
 (provide 'ultex-setup)
 
