@@ -1,5 +1,5 @@
 ;;; light.el --- lightning completion
-;; Copyright (c) 2005, 2013
+;; Copyright (c) 2005-2022
 ;; Mark Haiman, Nick Reingold, John Palmieri
 
 ;; Authors:   Mark Haiman <mhaiman@macaulay.ucsd.edu>, 
@@ -8,7 +8,7 @@
 ;; Maintainer: John Palmieri <palmieri@math.washington.edu>
 ;;             URL: http://www.math.washington.edu/~palmieri/Emacs/light.html
 ;; Keywords: completion
-;; Version:  0.83 of Sat Jul  6 14:34:03 PDT 2013
+;; Version:  0.90 of Thu Jul 28 15:32:53 PDT 2022
 
 ;; This file is not part of GNU Emacs.
 
@@ -280,7 +280,7 @@
 ;;  Customization
 ;;
 
-(defconst lc-version-string "0.71"
+(defconst lc-version-string "0.90"
   "Version of lightning completion package.")
 
 (defconst lc-version lc-version-string

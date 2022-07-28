@@ -1,5 +1,5 @@
 ;;; ultex-setup.el --- setup for Ultra-TeX mode
-;; Copyright (c) 1996, 1997, 1998, 1999, 2000, 2001 Mark Haiman, Nick
+;; Copyright (c) 1996-2022 Mark Haiman, Nick
 ;; Reingold, John Palmieri 
 
 ;; Authors:   Mark Haiman <mhaiman@macaulay.ucsd.edu>, 
@@ -8,7 +8,7 @@
 ;; Maintainer: John Palmieri <palmieri@math.washington.edu>
 ;;             URL: http://www.math.washington.edu/~palmieri/Emacs/ultratex.html
 ;; Keywords: TeX-mode, completion
-;; Version:  0.82 of Fri Jun 14 10:52:02 PDT 2013
+;; Version:  0.90 of Thu Jul 28 15:32:53 PDT 2022
 
 ;; This file is not part of GNU Emacs.
 

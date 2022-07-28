@@ -1,6 +1,5 @@
 ;;; ultex.el --- Ultra-TeX mode
-;; Copyright (c) 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999,
-;; 2000, 2001, 2002
+;; Copyright (c) 1991-2022
 ;; Mark Haiman, Nick Reingold, John Palmieri
 
 ;; Authors:   Mark Haiman <mhaiman@macaulay.ucsd.edu>, 
@@ -9,7 +8,7 @@
 ;; Maintainer: John Palmieri <palmieri@math.washington.edu>
 ;;             URL: http://www.math.washington.edu/~palmieri/Emacs/ultratex.html
 ;; Keywords: TeX-mode, completion
-;; Version:  0.83 of Sat Jul  6 14:33:34 PDT 2013
+;; Version:  0.90 of Thu Jul 28 15:32:53 PDT 2022
 
 ;; This file is not part of GNU Emacs.
 
@@ -249,7 +248,7 @@
 
 (require 'ultex-cus)
 
-(defconst ultex-version-string "0.71"
+(defconst ultex-version-string "0.90"
   "Version ultra-tex package.")
 
 (defconst ultex-version ultex-version-string

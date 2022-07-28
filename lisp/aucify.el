@@ -1,10 +1,10 @@
 ;;; aucify.el --- make Ultra-TeX compatible with AUC-TeX
-;; Copyright (c) 1996, 1997, 1998, 1999 Mark Hovey, John Palmieri
+;; Copyright (c) 1996-2022 Mark Hovey, John Palmieri
 
 ;; Authors:   Mark Hovey <hovey@member.ams.org>, 
 ;;            John Palmieri <palmieri@math.washington.edu>
 ;; Keywords: AUC-TeX vs. Ultra-TeX
-;; Version:  0.82 of Fri Jun 14 10:55:54 PDT 2013
+;; Version:  0.90 of Thu Jul 28 15:32:53 PDT 2022
 
 ;; This file is not part of GNU Emacs.
 

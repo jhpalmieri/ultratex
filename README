@@ -7,7 +7,7 @@ the documentation "light.texi" from the texi directory.
 
 Lightning completion package
 ----------------------------------
-(Version 0.60 of 1999/04/28)
+(Version 0.90 of 2022/07/28)
 
 The lightning completion package lets Emacs use "dynamic completion"
 on any number of things.  By dynamic completion, I mean that you don't
@@ -30,7 +30,7 @@ at MIT, Yale, and elsewhere.
 
 Ultra-TeX package
 ----------------------------------
-(Version 0.60 of 1999/04/28)
+(Version 0.90 of 2022/07/28)
 
 Ultra-TeX is an Emacs mode for editing LaTeX files (well, for editing
 TeX files in general, but it has been written very much with LaTeX in
