@@ -10,7 +10,7 @@ directory is in your emacs load-path: put a line like this in your
 2. Also, make sure that AUC-TeX
 (http://www.gnu.org/software/auctex/index.html) is installed -- it may
 be already, depending on your Emacs installation. In particular, we
-need the files tex.el, tex-buf.el, tex-site.el, and fond-latex.el. You
+need the files tex.el, tex-buf.el, tex-site.el, and font-latex.el. You
 can just get those four files and put them in your load path, for
 example in the directory ultratex/lisp, or you can do the full AUC-TeX
 installation. If you do, then I think that those files won't be put

@@ -46,6 +46,8 @@
 (define-key ultra-tex-mode-map "\C-c\C-k" 'TeX-kill-job)
 (define-key ultra-tex-mode-map "\C-c\C-c" 'TeX-command-master)
 (define-key ultra-tex-mode-map "\C-c\C-t" 'TeX-command-region)
+(define-key ultra-tex-mode-map "\C-c\C-a" 'TeX-command-run-all)
+(define-key ultra-tex-mode-map "\C-c\C-v" 'TeX-view)
 
 (easy-menu-define
  aucify-mode-menu
