@@ -1,4 +1,4 @@
-;;; docomp.el --- byte-compliling stuff for light and ultex
+;;; docomp.el --- byte-compiling stuff for light and ultex
 ;; Some of the contents of this file were cribbed from docomp.el in
 ;; William Perry's w3 package.
 

@@ -870,7 +870,7 @@ applies to the symbols.  A function symbol will be called with a
 STRING as first arg, PRED as second arg and third arg nil, t, or
 `lambda'; according to third arg, the function is supposed to return
 the common completion of STRING, all its completions, or the
-truth-value of its completeness.  In particular the function can be
+truth-value of its completions.  In particular the function can be
 like 'read-file-name-internal, with PRED the name of a directory.
   Third arg INIT is the number of characters before point to complete
 as the initial string.  Barf immediately if this is no match.  If
