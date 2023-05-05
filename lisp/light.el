@@ -1747,11 +1747,9 @@ if non-nil")
 
 (defun lc-query-replace-read-args (string regexp-flag)
   (let (from to)
-    (if query-replace-interactive
-	(setq from (car (if regexp-flag regexp-search-ring search-ring)))
-      (setq from (read-from-minibuffer (format "%s: " string)
-				       nil nil nil
-				       'query-replace-history)))
+    (setq from (read-from-minibuffer (format "%s: " string)
+				     nil nil nil
+				     'query-replace-history))
     (remove-hook 'minibuffer-setup-hook 'lightning-completion)
     (condition-case ()
 	(setq to (read-from-minibuffer (format "%s %s with: " string from)
