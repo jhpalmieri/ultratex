@@ -16,10 +16,10 @@ manual}.  Copyright @copyright{} 1996, 1997, 1998, 1999, 2001 John H. Palmieri
 @end ifinfo
 
 @titlepage
-@title{Ultra-@TeX{} Mode}
+@title Ultra-@TeX{} Mode
 @comment @subtitle{A different @TeX{} mode for GNU Emacs}
 
-@author (info by John H. Palmieri)
+@author info by John H. Palmieri
 
 @page
 @vskip 0pt plus 1filll

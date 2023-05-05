@@ -16,9 +16,9 @@ Manual}.  Copyright @copyright{} 1996, 1997, 1998, 1999 John H. Palmieri
 @end ifinfo
 
 @titlepage
-@title{Lightning Completion Manual}
+@title Lightning Completion Manual
 
-@author (info by John H. Palmieri)
+@author info by John H. Palmieri
 
 @page
 @vskip 0pt plus 1filll
@@ -125,7 +125,6 @@ of @kbd{a}, would have produced @samp{bozo}.  This sort of completion,
 in which completion is always on---you don't have to keep hitting the
 @key{SPC} or @key{TAB} key to complete---is called ``dynamic''
 completion.
-@refill
 
 @item
 Lightning completion takes effect only if Emacs is idle for a length of
@@ -137,7 +136,6 @@ lightning completion; if you are used to the old version, you can set
 this delay to be 0.  If you are a slow typist and you don't want Emacs
 completing unless you take a very deliberate pause, you can set it to
 something like 2.
-@refill
 
 @item
 Lightning completion can be initiated anywhere, not just in the
@@ -147,7 +145,6 @@ run the function @code{completing-insert-file-name}, and I'm in
 lightning completion mode.  There are similar function calls for
 completion on buffer names, lisp objects, lisp functions, lisp
 variables, and the contents of the kill ring.
-@refill
 @end itemize
 
 Some remarks:
@@ -163,7 +160,6 @@ keystrokes: one each for ``t'', ``w'', ``p'', ``h'', and ``a'', and then
 @key{RET}. (One also gets in the habit of trying to arrange it so that
 each of one's files in any given directory starts with a different
 letter.)
-@refill
 
 @item
 If you mainly use lightning completion with file names and if you edit
@@ -183,7 +179,6 @@ Ultra-@TeX{} mode, a major mode for typing @TeX{} documents.  Most
 starts lightning completion on @TeX{} commands.  The Ultra-@TeX{}
 package is available from
 @url{http://www.math.washington.edu/~palmieri/Emacs/ultratex.html}.
-@refill
 
 @item
 This package should be compatible with GNU Emacs 19, GNU Emacs 20, and
@@ -192,14 +187,12 @@ bit with each one of these, without running into problems).  I mostly
 use GNU Emacs 20, so I know it works there.  I expect it to work pretty
 well with XEmacs, too, but I don't use GNU Emacs 19 anymore, and I don't
 test this package very vigorously there.
-@refill
 
 @item
 Dynamic completion is an acquired taste.  It can be rather off-putting
 at the start, especially with a short
 @code{lc-complete-idle-time-default}, but once you get used to it, it's
 just wonderful.
-@refill
 @end enumerate
 
 In the following sections, I describe what functions to call to start
@@ -254,7 +247,6 @@ specified buffer.  @xref{Buffer completion}.
 what sort of completion it should do; if it can't figure it out, it
 completes on lisp objects.  (This one is mainly useful in the
 minibuffer.)
-@refill
 @end itemize
 
 (These functions all call the function @code{completing-insert}, which
