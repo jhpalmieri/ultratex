@@ -38,7 +38,7 @@ dvi: $(DVIFILES) clean
 html:
 	$(PERL) $(TEXI2HTML) $(TEXI2FLAG) $(SOURCES)
 
-clean: $(DVIFILES)
+clean:
 	'rm' -f *.aux *.cp *.fn *.ky *.log *.pg *.toc *.tp *.vr *.fns *.cps *.vrs
 
 distclean:
