@@ -1323,68 +1323,45 @@ completions, ding."
   (search-forward "\n\n")
   (forward-line 1))
 
-(defun lc-choose-completion ()
-  "Choose the completion that point is in or next to.
+(defun lc-choose-completion (&optional event)
+  "Choose the completion at point.
+If EVENT, use EVENT's position to determine the starting position.
 Just like choose-completion, except this calls
 lc-choose-completion-string instead of choose-completion-string."
-  (interactive)
-  (let (beg end completion (buffer completion-reference-buffer)
-	(base-size completion-base-size))
-    (if (and (not (eobp)) (get-text-property (point) 'mouse-face))
-	(setq end (point) beg (1+ (point))))
-    (if (and (not (bobp)) (get-text-property (1- (point)) 'mouse-face))
-	(setq end (1- (point)) beg (point)))
-    (if (null beg)
-	(error "No completion here"))
-    (setq beg (previous-single-property-change beg 'mouse-face))
-    (setq end (or (next-single-property-change end 'mouse-face)
-		  (point-max)))
-    (setq completion (buffer-substring-no-properties beg end))
-    (let ((owindow (selected-window)))
-      (if (and (one-window-p t 'selected-frame)
-	       (window-dedicated-p (selected-window)))
-	  ;; This is a special buffer's frame
-	  (iconify-frame (selected-frame))
-	(or (window-dedicated-p (selected-window))
-	    (bury-buffer)))
-      (select-window owindow))
-    (lc-choose-completion-string completion buffer base-size)))
-
-(defun lc-mouse-choose-completion (event)
-  "Click on an alternative in the `*Completions*' buffer to choose it.
-Just like mouse-choose-completion, except this calls
-lc-choose-completion-string instead of choose-completion-string."
-  (interactive "e")
-  ;; Give temporary modes such as isearch a chance to turn off.
+  (interactive (list last-nonmenu-event))
+  ;; In case this is run via the mouse, give temporary modes such as
+  ;; isearch a chance to turn off.
   (run-hooks 'mouse-leave-buffer-hook)
-  (let ((buffer (window-buffer))
-        choice
-	base-size)
-    (with-current-buffer (window-buffer (posn-window (event-start event)))
-      (if completion-reference-buffer
-	  (setq buffer completion-reference-buffer))
-      (setq base-size completion-base-size)
-      (save-excursion
-	(goto-char (posn-point (event-start event)))
-	(let (beg end)
-	  (if (and (not (eobp)) (get-text-property (point) 'mouse-face))
-	      (setq end (point) beg (1+ (point))))
-	  (if (null beg)
-	      (error "No completion here"))
-	  (setq beg (previous-single-property-change beg 'mouse-face))
-	  (setq end (or (next-single-property-change end 'mouse-face)
-			(point-max)))
-	  (setq choice (buffer-substring-no-properties beg end)))))
-    (let ((owindow (selected-window)))
-      (select-window (posn-window (event-start event)))
-      (if (and (one-window-p t 'selected-frame)
-	       (window-dedicated-p (selected-window)))
-	  ;; This is a special buffer's frame
-	  (iconify-frame (selected-frame))
-	(or (window-dedicated-p (selected-window))
-	    (bury-buffer)))
-      (select-window owindow))
-    (lc-choose-completion-string choice buffer base-size)))
+  (with-current-buffer (window-buffer (posn-window (event-start event)))
+    (let ((buffer completion-reference-buffer)
+          (base-position completion-base-position)
+          (insert-function completion-list-insert-choice-function)
+          (choice
+           (save-excursion
+             (goto-char (posn-point (event-start event)))
+             (let (beg)
+               (cond
+                ((and (not (eobp)) (get-text-property (point) 'mouse-face))
+                 (setq beg (1+ (point))))
+                ((and (not (bobp))
+                      (get-text-property (1- (point)) 'mouse-face))
+                 (setq beg (point)))
+                (t (error "No completion here")))
+               (setq beg (previous-single-property-change beg 'mouse-face))
+               (substring-no-properties
+                (get-text-property beg 'completion--string))))))
+
+      (unless (buffer-live-p buffer)
+        (error "Destination buffer is dead"))
+      (quit-window nil (posn-window (event-start event)))
+
+      (with-current-buffer buffer
+        (lc-choose-completion-string
+         choice buffer
+         (or base-position
+             ;; If all else fails, just guess.
+             (list (choose-completion-guess-base-position choice)))
+         insert-function)))))
 
 (defun lc-choose-completion-string (choice &optional buffer base-size)
   "Like choose-completion-string (from simple.el), with some stuff to

@@ -2,6 +2,8 @@
 ;; Some of the contents of this file were cribbed from docomp.el in
 ;; William Perry's w3 package.
 
+(package-initialize)
+
 (setq load-path (cons (expand-file-name "./")
 		      load-path))
 
