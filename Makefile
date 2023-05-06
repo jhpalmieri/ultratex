@@ -1,13 +1,14 @@
 # 'make elc' byte-compiles the main emacs lisp files
 # 'make info' formats the documentation files, producing info files
-# 'make dvi' formats the documentation files, producing dvi files
-# 'make all' does both of these tasks				
+# 'make pdf' formats the documentation files, producing pdf files
+# 'make all' does all of the above tasks
 #
-# 'make infodvi' formats the documentation files, producing info and dvi files
+# 'make dvi' formats the documentation files, producing dvi files
+# (this is not done by 'make all')
 
 EMACS=emacs
 
-all: elc info dvi
+all: elc info pdf
 
 elc:
 	cd lisp; $(MAKE) EMACS=$(EMACS) all
@@ -18,8 +19,8 @@ info:
 dvi:
 	cd texi; $(MAKE) EMACS=$(EMACS) dvi
 
-infodvi:
-	cd texi; $(MAKE) EMACS=$(EMACS) all
+pdf:
+	cd texi; $(MAKE) EMACS=$(EMACS) pdf
 
 distclean:
 	cd lisp; $(MAKE) distclean
