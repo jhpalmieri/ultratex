@@ -810,10 +810,9 @@ If turned off, `C-\\' does nothing."
   "Local map for completion list buffers (for use with lightning completion).")
 (or lc-completion-list-mode-map
     (let ((map (make-sparse-keymap)))
-      (define-key map [mouse-2] 'lc-mouse-choose-completion)
+      (define-key map [mouse-1] 'lc-choose-completion)
+      (define-key map [mouse-2] 'lc-choose-completion)
       (define-key map [down-mouse-2] nil)
-      (define-key map "\C-m" 'lc-choose-completion)
-      (define-key map "\e\e\e" 'delete-completion-window)
       (define-key map [left] 'previous-completion)
       (define-key map [right] 'next-completion)
       (setq lc-completion-list-mode-map map)))
@@ -1326,8 +1325,9 @@ completions, ding."
 (defun lc-choose-completion (&optional event)
   "Choose the completion at point.
 If EVENT, use EVENT's position to determine the starting position.
-Just like choose-completion, except this calls
-lc-choose-completion-string instead of choose-completion-string."
+Just like choose-completion (copied from simple.el in Emacs
+28.2), except this calls lc-choose-completion-string instead of
+choose-completion-string."
   (interactive (list last-nonmenu-event))
   ;; In case this is run via the mouse, give temporary modes such as
   ;; isearch a chance to turn off.
@@ -1363,92 +1363,62 @@ lc-choose-completion-string instead of choose-completion-string."
              (list (choose-completion-guess-base-position choice)))
          insert-function)))))
 
-(defun lc-choose-completion-string (choice &optional buffer base-size)
-  "Like choose-completion-string (from simple.el), with some stuff to
-make it work well (it says here) with lightning completion."
-  (let ((buffer (or buffer completion-reference-buffer)))
+(defun lc-choose-completion-string (choice &optional
+                                        buffer base-position insert-function)
+  "Like choose-completion-string (from simple.el, Emacs 28.2), with
+some stuff to make it work well (it says here) with lightning
+completion."
+
+  (let* ((buffer (or buffer completion-reference-buffer))
+	 (mini-p (minibufferp buffer)))
     ;; If BUFFER is a minibuffer, barf unless it's the currently
     ;; active minibuffer.
-    (if (and (string-match "\\` \\*Minibuf-[0-9]+\\*\\'" (buffer-name buffer))
-	     (or (not (active-minibuffer-window))
-		 (not (equal buffer
+    (if (and mini-p
+             (not (and (active-minibuffer-window)
+                       (equal buffer
 			     (window-buffer (active-minibuffer-window))))))
 	(error "Minibuffer is not active for completion")
-      ;; Insert the completion into the buffer where completion was requested.
+      ;; Set buffer so buffer-local choose-completion-string-functions works.
       (set-buffer buffer)
-      (if base-size
-	  (delete-region (+ base-size (point-min)) (point))
-	(choose-completion-delete-max-match choice))
-      (insert choice)
-;       (remove-text-properties (- (point) (length choice)) (point)
-; 			      '(mouse-face nil))
-      (if (string-match (regexp-quote (car lc-stack)) choice)
-	  (setq lc-stack (cons choice lc-stack))
-	(setq lc-stack (cons (concat (car lc-stack) choice)
-			     lc-stack)))
-      ;; choice may be part of a multiline string (e.g. in ultra-tex),
-      ;; so complete
-      (if (lc-complete-stack-top "" t)
-	  (lc-complete-stack-top ""))
-      ;; Update point in the window that BUFFER is showing in.
-      (let ((window (get-buffer-window buffer t)))
-	(set-window-point window (point)))
-      ;; If completing for the minibuffer, exit it with this choice.
-      (if (and (equal buffer (window-buffer (minibuffer-window)))
-	       minibuffer-completion-table)
-	   ;; If this is reading a file name, and the file name chosen
-	   ;; is a directory, don't exit the minibuffer.
-	  (if (and (eq minibuffer-completion-table 'read-file-name-internal)
-		   (file-directory-p (buffer-string)))
-	      (select-window (active-minibuffer-window))
-	    (exit-minibuffer))
-	(and lc-prev-windows
-	       (lc-quit 'choose))))))
-
-(defvar lc-completion-fixup-function nil
-  "A function to customize how completions are identified in completion lists.
-`lc-completion-setup-function' calls this function with no arguments
-each time it has found what it thinks is one completion.
-Point is at the end of the completion in the completion list buffer.
-If this function moves point, it can alter the end of that completion.")
-
-(defvar lc-completion-message-function
-  'lc-completion-default-message-function 
-  "A function to give the text at the top of the *Completions*
-buffer.  Called by `lc-completion-setup-function'.")
-
-(defun lc-completion-default-message-function nil
-  "Standard message function for lc-completion-setup-function."
-  (if (lc-window-system)
-      (insert (substitute-command-keys
-	       "Click \\[lc-mouse-choose-completion] on a completion to select it.\n")))
-  (insert (substitute-command-keys
-	   "In this buffer, type \\[lc-choose-completion] to \
-select the completion near point.\n\n"))
-  (forward-line 1))
-
-(defun lc-completion-setup-function ()
-  "Like completion-setup-function (from simple.el), except with
-slightly different messages."
-  (save-excursion
-    (let ((mainbuf (current-buffer)))
-      (set-buffer standard-output)
-      (completion-list-mode)
-      (make-local-variable 'completion-reference-buffer)
-      (setq completion-reference-buffer mainbuf)
-      ;; The value 0 is right in most cases, but not for file name completion.
-      ;; so this has to be turned off.
-      ;;      (setq completion-base-size 0)
-      (goto-char (point-min))
-      (if lc-completion-message-function
-	  (funcall lc-completion-message-function))
-      (while (re-search-forward "[^ \t\n]+\\( [^ \t\n]+\\)*" nil t)
-	(let ((beg (match-beginning 0))
-	      (end (point)))
-	  (if lc-completion-fixup-function
-	      (funcall lc-completion-fixup-function))
-	  (put-text-property beg (point) 'mouse-face 'highlight)
-	  (goto-char end))))))
+      (unless (run-hook-with-args-until-success
+	       'choose-completion-string-functions
+               ;; The fourth arg used to be `mini-p' but was useless
+               ;; (since minibufferp can be used on the `buffer' arg)
+               ;; and indeed unused.  The last used to be `base-size', so we
+               ;; keep it to try and avoid breaking old code.
+	       choice buffer base-position nil)
+        ;; This remove-text-properties should be unnecessary since `choice'
+        ;; comes from buffer-substring-no-properties.
+        ;;(remove-text-properties 0 (length choice) '(mouse-face nil) choice)
+	;; Insert the completion into the buffer where it was requested.
+        (funcall (or insert-function completion-list-insert-choice-function)
+                 (or (car base-position) (point))
+                 (or (cadr base-position) (point))
+                 choice)
+        ;; Update point in the window that BUFFER is showing in.
+	(let ((window (get-buffer-window buffer t)))
+	  (set-window-point window (point)))
+	;; If completing for the minibuffer, exit it with this choice.
+	(if (and (not completion-no-auto-exit)
+                 (minibufferp buffer)
+	         minibuffer-completion-table)
+	     ;; If this is reading a file name, and the file name chosen
+	     ;; is a directory, don't exit the minibuffer.
+             (let* ((result (buffer-substring (field-beginning) (point)))
+                    (bounds
+                     (completion-boundaries result minibuffer-completion-table
+                                            minibuffer-completion-predicate
+                                            "")))
+               (if (eq (car bounds) (length result))
+                   ;; The completion chosen leads to a new set of completions
+                   ;; (e.g. it's a directory): don't exit the minibuffer yet.
+                   (let ((mini (active-minibuffer-window)))
+                     (select-window mini)
+                     (when minibuffer-auto-raise
+                       (raise-frame (window-frame mini))))
+                 (exit-minibuffer)))
+          (and lc-prev-windows
+	       (lc-quit 'choose)))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; utilities
@@ -2079,7 +2049,7 @@ depending on whether we're using XEmacs or not."
     (let ((old-hook completion-setup-hook)
 	  (old-map completion-list-mode-map))
       (setq completion-setup-hook
-	    'lc-completion-setup-function
+	    'completion-setup-function
 	    completion-list-mode-map
 	    lc-completion-list-mode-map)
       (with-output-to-temp-buffer lc-completion-buffer-name
