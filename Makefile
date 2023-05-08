@@ -1,7 +1,7 @@
 # 'make elc' byte-compiles the main emacs lisp files
 # 'make info' formats the documentation files, producing info files
 # 'make dvi' formats the documentation files, producing dvi files
-# 'make all' does both of these tasks				
+# 'make all' does both of these tasks
 #
 # 'make infodvi' formats the documentation files, producing info and dvi files
 
