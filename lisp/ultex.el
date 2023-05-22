@@ -904,31 +904,31 @@ present, then load ultex-tree-file."
   (define-key ultra-tex-mode-map "\C-c\C-n" 'ultex-new-cs)
   (define-key ultra-tex-mode-map "\C-c\C-d" 'ultex-delete-csname)
   (define-key ultra-tex-mode-map "\C-[A"
-    '(lambda nil (interactive) (ultex-font "cal")))
+    #'(lambda nil (interactive) (ultex-font "cal")))
   (define-key ultra-tex-mode-map "\C-[B"
-    '(lambda nil (interactive) (ultex-font "bf")))
+    #'(lambda nil (interactive) (ultex-font "bf")))
   (define-key ultra-tex-mode-map "\C-[C"
-    '(lambda nil (interactive) (ultex-font "sc")))
+    #'(lambda nil (interactive) (ultex-font "sc")))
   (define-key ultra-tex-mode-map "\C-[E"
-    '(lambda nil (interactive) (ultex-font "em")))
+    #'(lambda nil (interactive) (ultex-font "em")))
   (define-key ultra-tex-mode-map "\C-[F"
-    '(lambda nil (interactive) (ultex-font "sf")))
+    #'(lambda nil (interactive) (ultex-font "sf")))
   (define-key ultra-tex-mode-map "\C-[I"
-    '(lambda nil (interactive) (ultex-font "it")))
+    #'(lambda nil (interactive) (ultex-font "it")))
   (define-key ultra-tex-mode-map "\C-[M"
-    '(lambda nil (interactive) (ultex-font "mit")))
+    #'(lambda nil (interactive) (ultex-font "mit")))
   (define-key ultra-tex-mode-map "\C-[R"
-    '(lambda nil (interactive) (ultex-font "rm")))
+    #'(lambda nil (interactive) (ultex-font "rm")))
   (define-key ultra-tex-mode-map "\C-[S"
-    '(lambda nil (interactive) (ultex-font "sl")))
+    #'(lambda nil (interactive) (ultex-font "sl")))
   (define-key ultra-tex-mode-map "\C-[T"
-    '(lambda nil (interactive) (ultex-font "tt")))
+    #'(lambda nil (interactive) (ultex-font "tt")))
   (define-key ultra-tex-mode-map "\C-[X"
-    '(lambda nil (interactive) (ultex-font "text")))
+    #'(lambda nil (interactive) (ultex-font "text")))
   (define-key ultra-tex-mode-map "\C-[Z"
-    '(lambda nil (interactive) (ultex-font "zz")))
+    #'(lambda nil (interactive) (ultex-font "zz")))
   (define-key ultra-tex-mode-map "\C-[U"
-    '(lambda nil (interactive) (ultex-font "up")))
+    #'(lambda nil (interactive) (ultex-font "up")))
   (if ultex-dont-use-completion
       (progn
 	(define-key ultra-tex-mode-map "\C-i" 'ultex-try-to-complete)
