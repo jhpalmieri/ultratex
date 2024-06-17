@@ -315,7 +315,28 @@ list of packages in which that symbol is defined.")
 
 (define-abbrev-table 'ultra-tex-mode-abbrev-table ())
 
-(defvar ultra-tex-mode-syntax-table nil
+(defvar ultra-tex-mode-syntax-table
+  (let ((st (make-syntax-table)))
+	(or ultex-blink-matching-paren
+	    (progn
+	      (modify-syntax-entry ?\( "_" st)
+	      (modify-syntax-entry ?\) "_" st))
+	(or ultex-blink-matching-bracket
+	    (progn
+	      (modify-syntax-entry ?\[ "_" st)
+	      (modify-syntax-entry ?\] "_" st)))
+	(modify-syntax-entry ?\\ "\\" st)
+	(modify-syntax-entry ?\$ "$$" st)
+	(modify-syntax-entry ?\" "." st)
+	(modify-syntax-entry ?& "." st)
+	(modify-syntax-entry ?_ "." st)
+	(modify-syntax-entry ?@ "_" st)
+	(modify-syntax-entry ?~ " " st)
+	(modify-syntax-entry ?% "<" st)
+	(modify-syntax-entry ?\f ">" st)
+	(modify-syntax-entry ?\n ">" st)
+	(modify-syntax-entry ?' "w" st))
+        st)
   "Syntax table used while in ultra-tex mode.")
 
 ;; This is a cons so it can be changed by side effect.
@@ -339,8 +360,8 @@ Built from bibliographical entries in buffer.")
 
 (make-variable-buffer-local 'ultex-current-tree-files)
 
-(defvar ultra-tex-mode-map nil
-  "Keymap for ultra-tex-mode")
+(defvar-keymap ultra-tex-mode-map
+  :doc "Keymap for ultra-tex-mode")
 
 (defvar ultex-greek-map nil
   "Keymap for Greek keyboard")
@@ -355,7 +376,7 @@ Built from bibliographical entries in buffer.")
 ;; entry point and other main functions.
 ;;
 
-(defun ultra-tex-mode nil
+(define-derived-mode ultra-tex-mode text-mode "Ultra-TeX"
   "Major mode for editing TeX documents.  
 
 \\<ultra-tex-mode-map>\\[ultex-fast-cs] starts lightning completion of control sequences.  Use \\[ultex-fast-noslash] for those
@@ -392,34 +413,10 @@ Entry into this mode runs tex-mode-hook and then ultra-tex-mode-hook.
 Special functions: 
 \\{ultra-tex-mode-map}"
   (interactive)
-  (kill-all-local-variables)
   (setq mode-name "UltraTeX")
   (setq major-mode 'ultra-tex-mode)
   (setq local-abbrev-table ultra-tex-mode-abbrev-table)
-  (if (null ultra-tex-mode-syntax-table)
-      (progn
-	(setq ultra-tex-mode-syntax-table (make-syntax-table))
-	(set-syntax-table ultra-tex-mode-syntax-table)
-	(or ultex-blink-matching-paren
-	    (progn
-	      (modify-syntax-entry ?\( "_")
-	      (modify-syntax-entry ?\) "_")))
-	(or ultex-blink-matching-bracket
-	    (progn
-	      (modify-syntax-entry ?\[ "_")
-	      (modify-syntax-entry ?\] "_")))
-	(modify-syntax-entry ?\\ "\\")
-	(modify-syntax-entry ?\$ "$$")
-	(modify-syntax-entry ?\" ".")
-	(modify-syntax-entry ?& ".")
-	(modify-syntax-entry ?_ ".")
-	(modify-syntax-entry ?@ "_")
-	(modify-syntax-entry ?~ " ")
-	(modify-syntax-entry ?% "<")
-	(modify-syntax-entry ?\f ">")
-	(modify-syntax-entry ?\n ">")
-	(modify-syntax-entry ?' "w"))
-    (set-syntax-table ultra-tex-mode-syntax-table))
+  (set-syntax-table ultra-tex-mode-syntax-table)
   (make-local-variable 'completing-insert-function)
   (setq completing-insert-function 'ultex-fast-noslash)
   (make-local-variable 'require-final-newline)
