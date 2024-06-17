@@ -445,10 +445,8 @@ Special functions:
 	(make-variable-buffer-local 'ultex-current-commands)
 	(make-variable-buffer-local 'ultex-current-labels)
 	(make-variable-buffer-local 'ultex-current-bibs)))
-  (or ultra-tex-mode-map
-      (progn
-	(ultex-define-ultra-tex-mode-map)
-	(ultex-reset-greek-keys)))
+  (ultex-define-ultra-tex-mode-map)
+  (ultex-reset-greek-keys)
   (ultex-menu-define-xemacs)
   (use-local-map ultra-tex-mode-map)
   (ultex-reset-perm-alist)
