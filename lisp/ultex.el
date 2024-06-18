@@ -447,7 +447,6 @@ Special functions:
 	(make-variable-buffer-local 'ultex-current-bibs)))
   (ultex-define-ultra-tex-mode-map)
   (ultex-reset-greek-keys)
-  (ultex-menu-define-xemacs)
   (use-local-map ultra-tex-mode-map)
   (ultex-reset-perm-alist)
 
@@ -929,11 +928,7 @@ present, then load ultex-tree-file."
 	(define-key ultra-tex-mode-map "\C-i" 'ultex-try-to-complete)
 	(define-key ultra-tex-mode-map "\\" 'self-insert-command)
 	(define-key ultra-tex-mode-map "\C-\\" nil)))
-  (define-key ultra-tex-mode-map "`" 'ultex-greek-map)
-  (easy-menu-define ultra-tex-menu
-		    ultra-tex-mode-map
-		    "Menu bar for Ultra-TeX mode"
-		    ultra-tex-menu))
+  (define-key ultra-tex-mode-map "`" 'ultex-greek-map))
 
 (defun ultex-reset-greek-keys ()
   "Reload Greek key definitions from ultex-greek-keys-file."
@@ -2554,27 +2549,6 @@ directory names in the list will end with a slash."
 						  (concat path file))))
 		   (setq answer (append file answer)))))
 	answer)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Stuff dependent on the version of Emacs.
-;;
-
-(defmacro ultex-menu-add (&rest menus)
-  `(ultex-menu-add-1 ',menus))
-(put 'ultex-menu-add 'lisp-indent-function 1)
-
-(defun ultex-menu-add-1 (menus)
-  (when (featurep 'menubar)
-    (while menus
-      (easy-menu-add (symbol-value (pop menus))))))
-
-(defun ultex-menu-define-xemacs nil
-  "Set up Ultra-TeX menus in XEmacs."
-  (ultex-menu-add ultra-tex-menu))
-
-;; caddr and cadddr aren't defined in GNU Emacs, at least in version 20.3.
-(if (not (and (fboundp 'caddr) (fboundp 'cadddr) (fboundp 'cddddr)))
-    (require 'cl))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
