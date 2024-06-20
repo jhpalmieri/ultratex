@@ -320,7 +320,7 @@ list of packages in which that symbol is defined.")
 	(or ultex-blink-matching-paren
 	    (progn
 	      (modify-syntax-entry ?\( "_" st)
-	      (modify-syntax-entry ?\) "_" st))
+	      (modify-syntax-entry ?\) "_" st)))
 	(or ultex-blink-matching-bracket
 	    (progn
 	      (modify-syntax-entry ?\[ "_" st)
@@ -335,7 +335,7 @@ list of packages in which that symbol is defined.")
 	(modify-syntax-entry ?% "<" st)
 	(modify-syntax-entry ?\f ">" st)
 	(modify-syntax-entry ?\n ">" st)
-	(modify-syntax-entry ?' "w" st))
+	(modify-syntax-entry ?' "w" st)
         st)
   "Syntax table used while in ultra-tex mode.")
 
