@@ -873,7 +873,8 @@ present, then load ultex-tree-file."
 
 (defun ultex-define-ultra-tex-mode-map ()
   "Define ultra-tex-mode-map."
-  (setq ultra-tex-mode-map (make-keymap))
+  (or ultra-tex-mode-map
+      (setq ultra-tex-mode-map (make-keymap)))
   (define-key ultra-tex-mode-map "\"" 'ultex-insert-quote)
   (define-key ultra-tex-mode-map "\\" 'ultex-fast-cs)
   (define-key ultra-tex-mode-map "\C-\\" 'ultex-fast-noslash)
